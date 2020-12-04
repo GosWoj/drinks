@@ -1,6 +1,10 @@
 import getElement from "./utils/getElement.js";
+import { showLoading, hideLoading } from "./utils/toggleLoading.js";
 
 const URL = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=gin";
+const baseURL = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
+const form = getElement(".search-form");
+const input = getElement('[name="drink"]');
 
 const showDrinks = async (url) => {
   //Fetch drinks
@@ -11,6 +15,7 @@ const showDrinks = async (url) => {
 };
 
 const fetchDrinks = async (url) => {
+  showLoading();
   try {
     const response = await fetch(url);
     const data = await response.json();
@@ -21,6 +26,7 @@ const fetchDrinks = async (url) => {
 };
 
 const displayDrinks = ({ drinks }) => {
+  hideLoading();
   const section = getElement(".section-center");
   const title = getElement(".title");
 
@@ -41,11 +47,23 @@ const displayDrinks = ({ drinks }) => {
   </a>`;
       })
       .join("");
+    hideLoading();
     title.textContent = "";
     section.innerHTML = newDrinks;
     return section;
   }
 };
+
+form.addEventListener("keyup", (e) => {
+  e.preventDefault();
+  const value = input.value;
+
+  if (!value) {
+    return;
+  } else {
+    showDrinks(`${baseURL}${value}`);
+  }
+});
 
 window.addEventListener("DOMContentLoaded", () => {
   showDrinks(URL);
