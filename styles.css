@@ -262,3 +262,38 @@ input::placeholder {
   font-size: 2rem;
   border-radius: var(--radius);
 }
+
+/* single cocktail */
+.single-drink {
+  width: 85vw;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  margin-top: 4rem;
+}
+.drink-img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  display: block;
+  border: 10px solid var(--clr-white);
+  border-radius: var(--radius);
+}
+@media screen and (min-width: 992px) {
+  .single-drink {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 3rem;
+  }
+}
+.drink-info {
+  padding-top: 2rem;
+}
+
+.drink-ingredients .far {
+  margin-right: 1rem;
+}
+
+.single-drink .btn {
+  display: inline-block;
+  margin-top: 2rem;
+}

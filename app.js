@@ -1,4 +1,5 @@
 import getElement from "./utils/getElement.js";
+import fetchDrinks from "./utils/fetchDrinks.js";
 import { showLoading, hideLoading } from "./utils/toggleLoading.js";
 
 const URL = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=gin";
@@ -12,16 +13,9 @@ const showDrinks = async (url) => {
 
   //Display drinks
   const section = await displayDrinks(data);
-};
 
-const fetchDrinks = async (url) => {
-  showLoading();
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    throw new Error(`${error}`);
+  if (section) {
+    setDrink(section);
   }
 };
 
@@ -52,6 +46,13 @@ const displayDrinks = ({ drinks }) => {
     section.innerHTML = newDrinks;
     return section;
   }
+};
+
+const setDrink = (section) => {
+  section.addEventListener("click", (e) => {
+    const id = e.target.parentElement.dataset.id;
+    localStorage.setItem("drink", id);
+  });
 };
 
 form.addEventListener("keyup", (e) => {
